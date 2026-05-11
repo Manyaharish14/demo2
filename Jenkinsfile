@@ -7,7 +7,9 @@ pipeline{
   stages{
     stage('Checkout'){
       steps{
-        git 'https://github.com/Manyaharish14/demo2.git'
+        git url : 'https://github.com/Manyaharish14/demo2.git',
+          branch : 'master'
+        credentials : 'github-token
       }
     }
     stage('Build'){
@@ -26,4 +28,20 @@ pipeline{
       }
     }
   }
+  post{
+    success{
+      email text(
+        subject : 'SUCCESS: ${JOB_NAME} #${BUILD_NUMBER}',
+        body : 'Bulid succeeded!\nCheck: ${BUILD_URL}',
+        to : 'manyaharish142gmail.com'
+      }
+    }
+    failure{
+      email text(
+        subject : 'SUCCESS: ${JOB_NAME} #${BUILD_NUMBER}',
+        body : 'Bulid succeeded!\nCheck: ${BUILD_URL}',
+        to : 'manyaharish142gmail.com'
+      }
+    }
+        
 }
